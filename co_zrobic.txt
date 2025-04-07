@@ -1,0 +1,12 @@
+Pan Tomasz:
+    zabespieczyć jak ktoś przy insercie wstawi ' tak aby nie zamknęło inserta do danej kolumny
+    komunikaty przy błędzie rejestracji
+
+Back office - Dawid i Pan Tomek: 
+    dodać widoki zamiast niektórych selectów
+    style.css
+    zamówienia
+    system zadań (wyślij do potwierdzenia, zatwierdź, odrzuć, itp.)
+
+Front office:
+    oczekuje potwiedzenia - zatwierdzenie i nie zatwierdzenie

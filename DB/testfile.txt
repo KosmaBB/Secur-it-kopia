@@ -1,0 +1,69 @@
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('16','','1','Test Usuń','Test Usuń','2025-03-28 13:02:12','test','Zrealizowano');
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('16','1','1','Test Usuń','Test Usuń','2025-03-28 13:02:52','test','Zwrócone');
+
+UPDATE `contact_form` SET `status`='Zwrócone', `id_employee`='1' WHERE `id_contact_form`=16;
+
+UPDATE `contact_form` SET `status`='Oczekuje potwierdzenia', `id_employee`='1' WHERE `id_contact_form`=16;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('17','1','1','Test Zwróć','Test Zwróć','2025-03-28 13:05:17','testowe zwrócenie zadania','Zwrócone');
+
+UPDATE `contact_form` SET `status`='Zwrócone', `id_employee`='1' WHERE `id_contact_form`=17;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('16','','1','Test Usuń','Test Usuń','2025-03-28 19:55:12','test_zakonczenie','Zrealizowano');
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('16','1','1','Test Usuń','Test Usuń','2025-03-28 19:56:26','test_zakonczenie','Zrealizowano');
+
+DELETE FROM `contact_form` WHERE `id_contact_form` = 16;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_user`, `date`, `description`, `status`) VALUES ('16', '1', '2025-03-28 19:56:26', 'Zadanie zostało usunięte', 'Usunięte');
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('18','1','1','Test Zakończ','Test Zakończ','2025-03-28 19:58:40','test_zakończ','Zrealizowano');
+
+DELETE FROM `contact_form` WHERE `id_contact_form` = 18;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_user`, `date`, `description`, `status`) VALUES ('18', '1', '2025-03-28 19:58:40', 'Zadanie zostało usunięte', 'Usunięte');
+
+SELECT * FROM `contact_form` WHERE id_contact_form =17;
+
+UPDATE `contact_form` SET `status`='Oczekuje potwierdzenia', `id_employee`='1' WHERE `id_contact_form`=17;
+
+SELECT * FROM `contact_form` WHERE id_contact_form =19;
+
+UPDATE `contact_form` SET `status`='Oczekuje potwierdzenia', `id_employee`='1' WHERE `id_contact_form`=19;
+
+SELECT * FROM `contact_form` WHERE id_contact_form =20;
+
+UPDATE `contact_form` SET `status`='Oczekuje potwierdzenia', `id_employee`='1' WHERE `id_contact_form`=20;
+
+SELECT * FROM `contact_form` WHERE id_contact_form =21;
+
+UPDATE `contact_form` SET `status`='Oczekuje potwierdzenia', `id_employee`='1' WHERE `id_contact_form`=21;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('17','1','1','Test Zwróć','Test Zwróć','2025-03-28 20:03:42','test zwróć przez uzytkownika','Zwrócone');
+
+SELECT * FROM `contact_form` WHERE id_contact_form =17;
+
+UPDATE `contact_form` SET `status`='Zwrócone', `id_employee`='1' WHERE `id_contact_form`=17;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('19','1','1','Test zakończ','test','2025-03-28 20:03:52','test zakończ przez uzytkownika','Zrealizowano');
+
+SELECT * FROM `contact_form` WHERE id_contact_form =19;
+
+UPDATE `contact_form` SET `status`='Zrealizowano', `id_employee`='' WHERE `id_contact_form`=19;
+
+INSERT INTO `task_history`(`id_contact_form`, `id_employee`, `id_user`, `title`, `message`, `date`, `description`, `status`) 
+                          VALUES ('19','1','1','Test zakończ','test','2025-03-28 20:04:41','test zakończ przez uzytkownika','Zrealizowano');
+
+SELECT * FROM `contact_form` WHERE id_contact_form =19;
+
+UPDATE `contact_form` SET `status`='Zrealizowano', `id_employee`='1' WHERE `id_contact_form`=19;
+
