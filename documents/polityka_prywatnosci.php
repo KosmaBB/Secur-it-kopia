@@ -17,9 +17,7 @@
     <div class="tlo"></div>
     <main class="main">
         <?php
-            include("../FO/header.php");
             include("../FO/nav.php");
-            include("../FO/footer.php");
         ?>
         <article class="subpage-container">
             <h1 style="text-align:center">Polityka Prywatności</h1>
@@ -358,5 +356,8 @@
             </ul>
         </article>
     </main>
+    <?php
+        include("../FO/footer.php");
+    ?>
 </body>
 </html>

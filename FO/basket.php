@@ -18,9 +18,7 @@
         <div class="tlo"></div>
         <main class="main">
             <?php
-                include("header.php");
                 include("nav.php");
-                include("footer.php");
             ?>
             <div class="basket-container">
                 <h2>Twój Koszyk</h2>
@@ -86,6 +84,9 @@
                     </div>
                 </div>
             </div>
+            <?php
+                include("footer.php");
+            ?>
         </main>
     </body>
 </html>

@@ -54,9 +54,7 @@
         <div class="tlo"></div>
         <main class="main">
             <?php
-                include("header.php");
                 include("nav.php");
-                include("footer.php");
             ?>
             <div id="changePasswordPage" class="change-password-container">
                 <h2>Zmień hasło</h2>
@@ -87,6 +85,9 @@
                     </div>
                 </form>
             </div>
+            <?php
+                include("footer.php");
+            ?>
         </main>
     </body>
 </html>

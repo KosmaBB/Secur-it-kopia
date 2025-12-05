@@ -209,13 +209,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const algorithmFlow = document.querySelector(".algorithm-flow");
     const algorithmBoxes = document.querySelectorAll(".algorithm-box");
     let delay = 0;
+    
+    // Stała wysokość odstępu między boxami
+    const verticalGap = 200;
+    
+    // Funkcja do pozycjonowania boxów
+    function positionBoxes() {
+        // Obliczenie środka ekranu
+        const screenCenter = window.innerWidth / 2;
+        
+        // Odstęp między boxami (połowa całkowitego odstępu)
+        const halfGap = 200; // Połowa z 400px
+        
+        algorithmBoxes.forEach((box, index) => {
+            // Szerokość boxa
+            const boxWidth = box.offsetWidth || 380; // Domyślna szerokość jeśli nie jest jeszcze obliczona
+            
+            // Pozycjonowanie box title (po lewej od środka)
+            box.style.position = "absolute";
+            box.style.left = `${screenCenter - boxWidth - halfGap}px`;
+            box.style.top = `${index * verticalGap}px`; // Każdy kolejny box niżej
+            
+            // Znajdź odpowiadający content box
+            const contentBox = document.querySelectorAll(".algorithm-content")[index];
+            if (contentBox) {
+                // Pozycjonowanie content boxa (po prawej od środka)
+                contentBox.style.position = "absolute";
+                contentBox.style.left = `${screenCenter + halfGap}px`;
+                contentBox.style.top = `${index * verticalGap}px`; // Na tej samej wysokości co box title
+            }
+            
+            // Znajdź odpowiadającą strzałkę poziomą
+            const horizontalArrow = document.querySelectorAll(".algorithm-connector")[index];
+            if (horizontalArrow) {
+                horizontalArrow.style.position = "absolute";
+                horizontalArrow.style.left = `${screenCenter - halfGap}px`;
+                horizontalArrow.style.top = `${index * verticalGap + box.offsetHeight / 2}px`;
+                horizontalArrow.style.width = `${halfGap * 2}px`;
+            }
+            
+            // Znajdź odpowiadającą strzałkę pionową
+            if (index < algorithmBoxes.length - 1) {
+                const verticalArrow = document.querySelectorAll(".algorithm-connector-vertical")[index];
+                if (verticalArrow) {
+                    verticalArrow.style.position = "absolute";
+                    verticalArrow.style.left = `${screenCenter - boxWidth - halfGap + boxWidth / 2 - 2}px`;
+                    verticalArrow.style.top = `${index * verticalGap + box.offsetHeight}px`;
+                    verticalArrow.style.height = `${verticalGap - box.offsetHeight}px`;
+                }
+            }
+        });
+    }
 
+    // Inicjalizacja boxów i ich zawartości
     algorithmBoxes.forEach((box, index) => {
         // Animacja pojawiania się boxów
         setTimeout(() => {
-            box.style.opacity = "1";
-            box.style.transform = "scale(1)";
-
+            box.classList.add("animate");
+            
             // Dodanie animacji pisania tekstu dla title
             const title = document.createElement("div");
             title.classList.add("typing");
@@ -226,48 +277,45 @@ document.addEventListener("DOMContentLoaded", () => {
             const contentBox = document.createElement("div");
             contentBox.classList.add("algorithm-content");
             contentBox.innerHTML = box.dataset.content;
-            contentBox.style.position = "absolute";
-            contentBox.style.left = `${box.offsetLeft + box.offsetWidth + 40}px`; // Pozycjonowanie na prawo od boxa title
-            contentBox.style.top = `${box.offsetTop - 10}px`; // Przesunięcie w górę o 10px
             algorithmFlow.appendChild(contentBox);
 
-            // Dodanie strzałki poziomej
-            const horizontalArrow = document.createElement("div");
-            horizontalArrow.classList.add("algorithm-connector");
-            horizontalArrow.style.position = "absolute";
-            horizontalArrow.style.left = `${box.offsetLeft + box.offsetWidth}px`;
-            horizontalArrow.style.top = `${box.offsetTop + box.offsetHeight / 2}px`; // Wyśrodkowanie w pionie
-            horizontalArrow.style.width = `${contentBox.offsetLeft - (box.offsetLeft + box.offsetWidth)}px`;
-            algorithmFlow.appendChild(horizontalArrow);
-
-            setTimeout(() => {
-                horizontalArrow.style.transform = "scaleX(1)";
-            }, 500);
+            // Dodanie strzałki poziomej tylko dla większych ekranów
+            if (window.innerWidth > 768) {
+                const horizontalArrow = document.createElement("div");
+                horizontalArrow.classList.add("algorithm-connector");
+                algorithmFlow.appendChild(horizontalArrow);
+            }
 
             // Dodanie strzałki pionowej
             if (index < algorithmBoxes.length - 1) {
                 const verticalArrow = document.createElement("div");
                 verticalArrow.classList.add("algorithm-connector-vertical");
-                verticalArrow.style.position = "absolute";
-                verticalArrow.style.left = `${box.offsetLeft + box.offsetWidth / 2 - 2}px`; // Wyśrodkowanie
-                verticalArrow.style.top = `${box.offsetTop + box.offsetHeight}px`; // Dolna krawędź
-                const nextBox = algorithmBoxes[index + 1];
-                verticalArrow.style.height = `${nextBox.offsetTop - (box.offsetTop + box.offsetHeight)}px`;
                 algorithmFlow.appendChild(verticalArrow);
-
-                setTimeout(() => {
-                    verticalArrow.style.transform = "scaleY(1)";
-                }, 500);
             }
 
-            // Animacja pojawiania się content boxa
+            // Pozycjonowanie wszystkich elementów
             setTimeout(() => {
+                positionBoxes();
+                
+                // Animacja pojawiania się content boxa
                 contentBox.style.opacity = "1";
                 contentBox.style.transform = "scale(1)";
-            }, 1000);
+                
+                // Animacja strzałek
+                const horizontalArrow = document.querySelectorAll(".algorithm-connector")[index];
+                if (horizontalArrow) {
+                    horizontalArrow.style.transform = "scaleX(1)";
+                }
+                
+                const verticalArrow = document.querySelectorAll(".algorithm-connector-vertical")[index];
+                if (verticalArrow) {
+                    verticalArrow.style.transform = "scaleY(1)";
+                }
+            }, 100);
+            
         }, delay);
 
-        delay += 3000; // Opóźnienie między kolejnymi boxami
+        delay += 1500; // Krótsze opóźnienie dla lepszego UX
     });
 
     // Obsługa kliknięcia na box title
@@ -275,42 +323,78 @@ document.addEventListener("DOMContentLoaded", () => {
         box.addEventListener("click", () => {
             const contentBox = document.querySelectorAll(".algorithm-content")[index];
             const horizontalArrow = document.querySelectorAll(".algorithm-connector")[index];
-            const verticalArrow = document.querySelectorAll(".algorithm-connector-vertical")[index];
 
             // Sprawdzenie stanu widoczności
-            if (contentBox.style.opacity === "1") {
+            if (contentBox.style.opacity === "1" || contentBox.style.opacity === "") {
                 // Ukrywanie elementów
-                const contentText = contentBox.querySelector(".typing");
-                if (contentText) {
-                    contentText.style.animation = "deleteText 0.5s forwards";
+                contentBox.style.opacity = "0";
+                contentBox.style.transform = "scale(0.8)";
+
+                if (horizontalArrow) {
+                    horizontalArrow.style.transform = "scaleX(0)";
                 }
-
-                setTimeout(() => {
-                    contentBox.style.animation = "hideBox 0.5s forwards";
-                }, 500);
-
-                setTimeout(() => {
-                    if (horizontalArrow) {
-                        horizontalArrow.style.animation = "retractArrow 0.5s forwards";
-                    }
-                }, 1000);
             } else {
                 // Pokazywanie elementów
-                contentBox.style.animation = "showBox 0.5s forwards";
+                contentBox.style.opacity = "1";
+                contentBox.style.transform = "scale(1)";
 
-                setTimeout(() => {
-                    if (horizontalArrow) {
-                        horizontalArrow.style.animation = "extendArrow 0.5s forwards";
-                    }
-                }, 500);
-
-                setTimeout(() => {
-                    const contentText = contentBox.querySelector(".typing");
-                    if (contentText) {
-                        contentText.style.animation = "fadeInText 0.5s forwards";
-                    }
-                }, 1000);
+                if (horizontalArrow) {
+                    horizontalArrow.style.transform = "scaleX(1)";
+                }
             }
         });
     });
+    
+    // Obsługa zmiany rozmiaru okna
+    window.addEventListener('resize', () => {
+        // Ponowne pozycjonowanie elementów przy zmianie rozmiaru okna
+        if (window.innerWidth > 768) {
+            positionBoxes();
+        } else {
+            // Dla małych ekranów - reset pozycji
+            algorithmBoxes.forEach((box, index) => {
+                box.style.position = "";
+                box.style.left = "";
+                box.style.top = "";
+                
+                const contentBox = document.querySelectorAll(".algorithm-content")[index];
+                if (contentBox) {
+                    contentBox.style.position = "absolute";
+                    contentBox.style.left = "50%";
+                    contentBox.style.transform = "translateX(-50%)";
+                    contentBox.style.top = `${box.offsetTop + box.offsetHeight + 30}px`;
+                }
+            });
+        }
+    });
+    
+    // Wywołanie funkcji pozycjonowania po załadowaniu strony
+    setTimeout(positionBoxes, 100);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Obsługa zwijania/rozwijania sidebar
+    const sidebar = document.getElementById('holo-sidebar');
+    const main = document.getElementById('main');
+    
+    // Sprawdź zapisany stan sidebar
+    const savedState = localStorage.getItem('holoSidebarState');
+    if (savedState === 'collapsed') {
+        main.classList.add('sidebar-collapsed');
+    }
+    
+    // Nasłuchuj zmian w sidebar
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (sidebar.classList.contains('collapsed')) {
+                    main.classList.add('sidebar-collapsed');
+                } else {
+                    main.classList.remove('sidebar-collapsed');
+                }
+            }
+        });
+    });
+    
+    observer.observe(sidebar, { attributes: true });
 });

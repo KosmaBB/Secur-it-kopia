@@ -17,9 +17,7 @@
     <div class="tlo"></div>
     <main class="main">
         <?php
-            include("../FO/header.php");
             include("../FO/nav.php");
-            include("../FO/footer.php");
         ?>
         <article class="subpage-container">
             <h1 class="page-title text-center">Regulamin serwisu</h1>
@@ -189,6 +187,9 @@
                 </li>
             </ul>
         </article>
+        <?php
+        include("../FO/footer.php");
+        ?>
     </main>
 </body>
 </html>

@@ -18,9 +18,7 @@
         <div class="tlo"></div>
         <main class="main">
         <?php
-                include("header.php");
                 include("nav.php");
-                include("footer.php");
 
                 $baza = new db_contact;
                 $baza->databaseConnect();
@@ -76,5 +74,8 @@
                 }
         ?>
         </main>
+        <?php
+            include("footer.php");
+        ?>
     </body>
 </html>

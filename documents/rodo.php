@@ -17,9 +17,7 @@
         <div class="tlo"></div>
         <main class="main">
             <?php
-                include("../FO/header.php");
                 include("../FO/nav.php");
-                include("../FO/footer.php");
             ?>
             <article class="subpage-container">
                 <h1>Obowiązek informacyjny RODO</h1>
@@ -118,6 +116,9 @@
                     <li><p><strong>Prawo wniesienia skargi</strong><br />Użytkownikom przysługuje prawo wniesienia skargi do organu nadzorczego zajmującego się ochroną danych osobowych.</p></li>
                 </ul>
             </article>
+            <?php
+                include("../FO/footer.php");
+            ?>
         </main>
     </body>
 </html>
